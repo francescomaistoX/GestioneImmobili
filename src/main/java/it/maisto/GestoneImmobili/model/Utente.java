@@ -16,7 +16,7 @@ public class Utente {
     private String email;
     private String password;
     @OneToMany(mappedBy = "utente",cascade = CascadeType.REMOVE)
-    private List<Immobbile> immobbili;
+    private List<Immobile> immobbili;
 
 
 }

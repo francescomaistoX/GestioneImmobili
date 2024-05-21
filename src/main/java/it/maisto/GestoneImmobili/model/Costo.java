@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Locale;
+
 @Data
 @Entity
 public class Costo {
@@ -17,5 +17,5 @@ public class Costo {
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "idImmobbile")
-    private Immobbile immobbile;
+    private Immobile immobbile;
 }

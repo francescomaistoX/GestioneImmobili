@@ -7,14 +7,15 @@ import java.util.List;
 
 @Data
 @Entity
-public class Immobbile {
+public class Immobile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int               id;
     private String            nome;
     private String            indirizzo;
+    private String            immaggine;
     @OneToMany(mappedBy = "immobbile",cascade = CascadeType.REMOVE)
-    private List<Affitto>     affitto;
+    private List<Affitto>     affitti;
     @OneToMany(mappedBy = "immobbile",cascade = CascadeType.REMOVE)
     private List<Costo>       costi;
     @ManyToOne
