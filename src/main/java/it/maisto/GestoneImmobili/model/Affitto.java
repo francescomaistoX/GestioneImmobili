@@ -17,6 +17,6 @@ public class Affitto {
     private String cognomerAffitttuario;
     private String numeroCellulare;
     @ManyToOne
-    @JoinColumn(name = "idImmobbile")
-    private Immobile immobbile;
+    @JoinColumn(name = "idImmobile")
+    private Immobile immobile;
 }

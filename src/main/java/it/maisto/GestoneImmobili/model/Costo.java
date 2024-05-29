@@ -16,6 +16,6 @@ public class Costo {
     private double importo;
     private LocalDate date;
     @ManyToOne
-    @JoinColumn(name = "idImmobbile")
-    private Immobile immobbile;
+    @JoinColumn(name = "idImmobile")
+    private Immobile immobile;
 }

@@ -14,9 +14,9 @@ public class Immobile {
     private String            nome;
     private String            indirizzo;
     private String            immaggine;
-    @OneToMany(mappedBy = "immobbile",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "immobile",cascade = CascadeType.REMOVE)
     private List<Affitto>     affitti;
-    @OneToMany(mappedBy = "immobbile",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "immobile",cascade = CascadeType.REMOVE)
     private List<Costo>       costi;
     @ManyToOne
     @JoinColumn(name = "idUtente")

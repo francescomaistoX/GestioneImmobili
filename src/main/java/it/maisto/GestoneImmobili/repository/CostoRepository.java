@@ -14,8 +14,8 @@ import java.util.Optional;
 public interface CostoRepository extends JpaRepository<Costo,Integer> {
 
     List<Costo> findByImmobile(Immobile immobile);
-    @Query("SELECT SUM(c.importo) FROM Costo c WHERE c.idimmobile = :idImmobile")
-    Double findTotalCostByImmobile(@Param("idImmobile") Immobile immobile);
+    @Query("SELECT SUM(importo) FROM Costo c WHERE c.immobile = :immobile")
+    Double findTotalCostByImmobile(@Param("immobile") Immobile immobile);
 
 
 }

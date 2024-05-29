@@ -15,18 +15,7 @@ import java.util.Optional;
 public class AffittoService {
     @Autowired
     AffittoRepository affittoRepo;
-    @Autowired
-    ImmobileRepository immobileRepo;
 
-    public void saveAffitto (AffittoRequest affittoRequest,int idImmobile){
-        Affitto affitto = new Affitto();
-        affitto.setId(affittoRequest.getId());
-        affitto.setInizio(affittoRequest.getInizio());
-        affitto.setScadenza(affittoRequest.getScadenza());
-        affitto.setNomeAffittuario(affittoRequest.getNomeAffittuario());
-        affitto.setCognomerAffitttuario(affittoRequest.getCognomerAffitttuario());
-        affitto.setNumeroCellulare(affittoRequest.getNumeroCellulare());
 
-        affittoRepo.save(affitto);
-    }
+
 }

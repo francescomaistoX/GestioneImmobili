@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ErrorResponse {
+public class ErrorResponse extends Throwable {
     private String message;
     private LocalDateTime dataError;
 
