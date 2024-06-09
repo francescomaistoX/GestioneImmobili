@@ -55,8 +55,9 @@ public class ImmobileService {
 
         return null;
     }
-    public List<ImmobileDto> immobiliNoAffitti(){
-        List<Immobile> immobili= immobileRepo.findImmobiliSenzaAffitti();
+    public List<ImmobileDto> immobiliNoAffitti(int idUtente){
+        Utente utente = utenteServ.trovaUtentePerId(idUtente);
+        List<Immobile> immobili= immobileRepo.findImmobiliSenzaAffitti(utente);
         List<ImmobileDto> immobiliDto = new ArrayList<>();
         for (Immobile i : immobili){
             ImmobileDto dto = new ImmobileDto();
@@ -68,8 +69,10 @@ public class ImmobileService {
         }
         return immobiliDto;
     }
-    public List<ImmobileDto> immobiliConAffitti(){
-        List<Immobile> immobili= immobileRepo.findImmobiliConAffitti();
+    public List<ImmobileDto> immobiliConAffitti(int idUtente){
+        Utente utente = utenteServ.trovaUtentePerId(idUtente);
+        List<Immobile> immobili= immobileRepo.findImmobiliConAffitti(utente);
+
         List<ImmobileDto> immobiliDto = new ArrayList<>();
         for (Immobile i : immobili){
             ImmobileDto dto = new ImmobileDto();

@@ -27,5 +27,14 @@ public class UtenteService {
     public Utente trovaUtenteByEmail(String email){
     return utenteRepo.findByEmail(email).orElseThrow(()->new NotFoundException("Utente non trovato"));
    }
+   public UtenteDto contertiDto (Utente utente){
+        UtenteDto utenteDto = new UtenteDto();
+        utenteDto.setNome(utente.getNome());
+        utenteDto.setCognome(utente.getCognome());
+        utenteDto.setPassword(utente.getPassword());
+        utenteDto.setEmail(utente.getEmail());
+        utenteDto.setId(utente.getId());
+        return utenteDto;
+   }
 
 }
