@@ -9,13 +9,64 @@ import it.maisto.GestoneImmobili.repository.ImmobileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AffittoService {
     @Autowired
     AffittoRepository affittoRepo;
+    @Autowired
+    ImmobileService immobileService;
+    @Autowired
+    ImmobileRepository immobileRepository;
 
+   public List<Affitto> listaAffitti(int idImmobbile){
+       Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
+       return affittoRepo.findByImmobile(immobile);
+   }
+   public AffittoDto convertiDto(Affitto affitto){
+       AffittoDto affittoDto = new AffittoDto();
+       affittoDto.setId(affitto.getId());
+       affittoDto.setIdImmobbile(affitto.getImmobile().getId());
+       affittoDto.setInizio(affitto.getInizio());
+       affittoDto.setScadenza(affitto.getScadenza());
+       affittoDto.setNomeAffittuario(affitto.getNomeAffittuario());
+       affittoDto.setCognomerAffitttuario(affitto.getCognomerAffitttuario());
+       affittoDto.setNumeroCellulare(affitto.getNumeroCellulare());
+       return affittoDto;
+   }
+   public List<AffittoDto> listaAffittiDto(int idImmobbile){
+       Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
+       List<AffittoDto> affittiDto = new ArrayList<>();
+       List<Affitto> affitti = affittoRepo.findByImmobile(immobile);
+       for(Affitto affitto : affitti){
+           affittiDto.add( convertiDto(affitto));
+       }
+       return affittiDto;
 
+   }
+ public boolean saveAffitto (AffittoRequest affittoRequest , int idImmobbile){
+      List<Affitto> affitti = listaAffitti(idImmobbile);
+      for (Affitto affitto : affitti){
+          if (!(affittoRequest.getScadenza().isBefore(affitto.getInizio())||affittoRequest.getInizio().isAfter(affitto.getScadenza()))){
+              return false;
+          }
+
+      }
+     Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
+     Affitto newAffitto = new Affitto();
+     newAffitto.setImmobile(immobile);
+     newAffitto.setInizio(affittoRequest.getScadenza());
+     newAffitto.setScadenza(affittoRequest.getScadenza());
+     newAffitto.setNomeAffittuario(affittoRequest.getNomeAffittuario());
+     newAffitto.setCognomerAffitttuario(affittoRequest.getCognomerAffitttuario());
+     newAffitto.setNumeroCellulare(affittoRequest.getNumeroCellulare());
+     affittoRepo.save(newAffitto);
+     immobile.getAffitti().add(newAffitto);
+     immobileRepository.save(immobile);
+     return true;
+ }
 
 }

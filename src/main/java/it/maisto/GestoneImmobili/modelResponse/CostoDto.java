@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class CostoDto {
+    private int id;
     private String nome;
     private String descizione;
     private double importo;

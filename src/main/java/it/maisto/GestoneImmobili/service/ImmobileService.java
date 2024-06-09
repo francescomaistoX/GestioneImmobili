@@ -12,6 +12,7 @@ import it.maisto.GestoneImmobili.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class ImmobileService {
 
     public ImmobileDto conversioneDto(Immobile immobile){
         ImmobileDto immobileDto= new ImmobileDto();
+        immobileDto.setId(immobile.getId());
         immobileDto.setNome(immobile.getNome());
         immobileDto.setIndirizzo(immobile.getIndirizzo());
         immobileDto.setImmaggine(immobile.getImmaggine());
@@ -36,13 +38,15 @@ public class ImmobileService {
 
     public ImmobileDto saveImmobile(ImmobileRequest immobileRequest,int idUtente){
         try {
-        Utente utente= utenteServ.trovaUtente(idUtente);
+        Utente utente= utenteServ.trovaUtentePerId(idUtente);
         Immobile immobile= new Immobile();
         immobile.setNome(immobileRequest.getNome());
         immobile.setIndirizzo(immobileRequest.getIndirizzo());
         immobile.setImmaggine(immobileRequest.getImmaggine());
-        utenteRepository.save(utente);
         immobile.setUtente(utente);
+        immobileRepo.save(immobile);
+        utente.getImmobbili().add(immobile);
+        utenteRepository.save(utente);
          return conversioneDto(immobile);
 
         }catch (BadRequestException e) {
@@ -51,7 +55,33 @@ public class ImmobileService {
 
         return null;
     }
-    public List<Immobile> immobiliNoAffitti(){
-        return immobileRepo.findImmobiliSenzaAffitti();
+    public List<ImmobileDto> immobiliNoAffitti(){
+        List<Immobile> immobili= immobileRepo.findImmobiliSenzaAffitti();
+        List<ImmobileDto> immobiliDto = new ArrayList<>();
+        for (Immobile i : immobili){
+            ImmobileDto dto = new ImmobileDto();
+            dto.setIdUtente(i.getUtente().getId());
+            dto.setImmaggine(i.getImmaggine());
+            dto.setIndirizzo(i.getIndirizzo());
+            dto.setNome(i.getNome());
+            immobiliDto.add(dto);
+        }
+        return immobiliDto;
+    }
+    public List<ImmobileDto> immobiliConAffitti(){
+        List<Immobile> immobili= immobileRepo.findImmobiliConAffitti();
+        List<ImmobileDto> immobiliDto = new ArrayList<>();
+        for (Immobile i : immobili){
+            ImmobileDto dto = new ImmobileDto();
+            dto.setIdUtente(i.getUtente().getId());
+            dto.setImmaggine(i.getImmaggine());
+            dto.setIndirizzo(i.getIndirizzo());
+            dto.setNome(i.getNome());
+            immobiliDto.add(dto);
+        }
+        return immobiliDto;
+    }
+    public Immobile  trovaImmobilePerId(int id){
+        return immobileRepo.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
     }
 }

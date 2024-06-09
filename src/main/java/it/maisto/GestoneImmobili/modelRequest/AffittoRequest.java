@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 @Data
 public class AffittoRequest {
-    private int id;
     private LocalDate inizio;
     private LocalDate scadenza;
     private String nomeAffittuario;

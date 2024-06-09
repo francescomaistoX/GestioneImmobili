@@ -21,7 +21,7 @@ public class UtenteService {
         utente.setPassword(utenteRequest.getPassword());
         return utenteRepo.save(utente);
     }
-    public Utente trovaUtente(int id){
+    public Utente trovaUtentePerId(int id){
         return utenteRepo.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
     }
     public Utente trovaUtenteByEmail(String email){

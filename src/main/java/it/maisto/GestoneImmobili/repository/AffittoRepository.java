@@ -13,4 +13,5 @@ public interface AffittoRepository extends JpaRepository<Affitto,Integer> {
 
 
     List<Affitto> findByImmobile(Immobile immobile);
+
 }
