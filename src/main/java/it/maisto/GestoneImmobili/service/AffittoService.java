@@ -1,14 +1,17 @@
 package it.maisto.GestoneImmobili.service;
 
 import it.maisto.GestoneImmobili.model.Affitto;
+import it.maisto.GestoneImmobili.model.AffittoScaduto;
 import it.maisto.GestoneImmobili.model.Immobile;
 import it.maisto.GestoneImmobili.modelRequest.AffittoRequest;
 import it.maisto.GestoneImmobili.modelResponse.AffittoDto;
 import it.maisto.GestoneImmobili.repository.AffittoRepository;
+import it.maisto.GestoneImmobili.repository.AffittoScadutoRepository;
 import it.maisto.GestoneImmobili.repository.ImmobileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +24,8 @@ public class AffittoService {
     ImmobileService immobileService;
     @Autowired
     ImmobileRepository immobileRepository;
+    @Autowired
+    AffittoScadutoRepository affittoScadutoRepository;
 
    public List<Affitto> listaAffitti(int idImmobbile){
        Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
@@ -68,5 +73,22 @@ public class AffittoService {
      immobileRepository.save(immobile);
      return true;
  }
+
+    public void rimuoviAffittiScaduti(int immobileId) {
+       Immobile immobile= immobileService.trovaImmobilePerId(immobileId);
+        List<Affitto> affitti = affittoRepo.findByScadenza(LocalDate.now(), immobile);
+        for(Affitto a : affitti){
+            AffittoScaduto affittoScaduto= new AffittoScaduto();
+            affittoScaduto.setCognomerAffitttuario(a.getCognomerAffitttuario());
+            affittoScaduto.setNomeAffittuario(a.getNomeAffittuario());
+            affittoScaduto.setNumeroCellulare(a.getNumeroCellulare());
+            affittoScaduto.setInizio(a.getInizio());
+            affittoScaduto.setScadenza(a.getScadenza());
+            affittoScaduto.setImmobile(a.getImmobile());
+            affittoScadutoRepository.save(affittoScaduto);
+        }
+        affittoRepo.deleteAll(affitti);
+    }
+
 
 }

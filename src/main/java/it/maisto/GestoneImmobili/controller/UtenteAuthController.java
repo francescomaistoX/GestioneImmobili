@@ -27,7 +27,7 @@ public Utente register(@RequestBody UtenteRequest utenteRequest, BindingResult b
     }
     return utenteService.save(utenteRequest);
 }
-    @PostMapping("/utente/register")
+    @PostMapping("/utente/login")
     public UtenteDto login(@RequestBody LoginRequest loginRequest, BindingResult bindingResult) throws BadRequestException {
         if(bindingResult.hasErrors()){
             throw new BadRequestException(bindingResult.getAllErrors().toString());

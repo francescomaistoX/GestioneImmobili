@@ -22,7 +22,7 @@ public class UtenteService {
         return utenteRepo.save(utente);
     }
     public Utente trovaUtentePerId(int id){
-        return utenteRepo.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
+        return utenteRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con id=" + id + " non trovato"));
     }
     public Utente trovaUtenteByEmail(String email){
     return utenteRepo.findByEmail(email).orElseThrow(()->new NotFoundException("Utente non trovato"));

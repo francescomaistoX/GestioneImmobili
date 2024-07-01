@@ -87,4 +87,5 @@ public class ImmobileService {
     public Immobile  trovaImmobilePerId(int id){
         return immobileRepo.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
     }
+
 }

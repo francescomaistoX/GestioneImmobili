@@ -17,6 +17,8 @@ public class Immobile {
     @OneToMany(mappedBy = "immobile",cascade = CascadeType.REMOVE)
     private List<Affitto>     affitti;
     @OneToMany(mappedBy = "immobile",cascade = CascadeType.REMOVE)
+    private List<AffittoScaduto>     affittoScaduto;
+    @OneToMany(mappedBy = "immobile",cascade = CascadeType.REMOVE)
     private List<Costo>       costi;
     @ManyToOne
     @JoinColumn(name = "idUtente")

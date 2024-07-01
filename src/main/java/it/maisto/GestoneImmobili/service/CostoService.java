@@ -10,6 +10,7 @@ import it.maisto.GestoneImmobili.repository.ImmobileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,10 +47,10 @@ public class CostoService {
      return convertiDto(costo);
  }
     public Costo  trovaCostoPerId(int id){
-        return costoRepository.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
+        return costoRepository.findById(id).orElseThrow(() -> new NotFoundException("costo con id=" + id + " non trovato"));
     }
     public CostoDto  trovaCostoDtoPerId(int id){
-        Costo costo= costoRepository.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
+        Costo costo= costoRepository.findById(id).orElseThrow(() -> new NotFoundException("costo con id=" + id + " non trovato"));
         return convertiDto(costo);
 
     }
@@ -61,5 +62,15 @@ public class CostoService {
     public List<Costo> costoList (int idImmobile){
         Immobile immobile = immobileService.trovaImmobilePerId(idImmobile);
         return costoRepository.findByImmobile(immobile);
+    }
+    public List<CostoDto> costoListDto (int idImmobile){
+        Immobile immobile = immobileService.trovaImmobilePerId(idImmobile);
+        List<CostoDto> costiDto = new ArrayList<>();
+        List<Costo> costi= costoRepository.findByImmobile(immobile);
+        for(Costo c : costi){
+          CostoDto dto=  convertiDto(c);
+          costiDto.add(dto);
+        }
+        return costiDto;
     }
 }
