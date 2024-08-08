@@ -8,6 +8,7 @@ import it.maisto.GestoneImmobili.service.AffittoScadutoService;
 import it.maisto.GestoneImmobili.service.AffittoService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -34,15 +35,17 @@ public class AffittoController {
         if (bindingResult.hasErrors()){
             throw new BadRequestException(bindingResult.getAllErrors().toString());
         }
-        affittoService.saveAffitto(affittoRequest,idImmobile);
-        return ResponseEntity.ok("Affitto Salvato");
+        if ( !affittoService.saveAffitto(affittoRequest,idImmobile)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Affitto non salvato. Data non disponibile");
+        }
+       return ResponseEntity.ok("Affitto Salvato");
     }
     @GetMapping("/affitti")
-   public List<AffittoDto> affittiDto(@RequestParam int idImmobbile){
-       return affittoService.listaAffittiDto(idImmobbile);
+   public List<AffittoDto> affittiDto(@RequestParam int idImmobile){
+       return affittoService.listaAffittiDto(idImmobile);
    }
    @GetMapping("/affittiScaduti")
-   public List<AffittoScadutoDto> affittiScaduti(@RequestParam int idImmobiler){
-        return affittoScadutoService.affittiScadutiDto(idImmobiler);
+   public List<AffittoScadutoDto> affittiScaduti(@RequestParam int idImmobile){
+        return affittoScadutoService.affittiScadutiDto(idImmobile);
    }
 }

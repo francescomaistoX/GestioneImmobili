@@ -17,20 +17,24 @@ public class CostoController {
     @Autowired
     CostoService costoService;
     @PostMapping("/costo")
-    public ResponseEntity<String> salvaCosto(@RequestBody CostoRequest costoRequest, @RequestParam int idImmobbile, BindingResult bindingResult)throws BadRequestException {
+    public ResponseEntity<String> salvaCosto(@RequestBody CostoRequest costoRequest, @RequestParam int idImmobile, BindingResult bindingResult)throws BadRequestException {
         if (bindingResult.hasErrors()){
             throw new BadRequestException(bindingResult.getAllErrors().toString());
         }
-        costoService.salvaCosto(costoRequest,idImmobbile);
+        costoService.salvaCosto(costoRequest,idImmobile);
         return ResponseEntity.ok("Costo aggiunto");
     }
-    @PostMapping("/costi")
-    public List<CostoDto> costi (@RequestParam int idImmobbile){
-        return costoService.costoListDto(idImmobbile);
+    @GetMapping ("/costi")
+    public List<CostoDto> costi (@RequestParam int idImmobile){
+        return costoService.costoListDto(idImmobile);
 
     }
     @GetMapping("/totaleCosti")
-    public  double totalecosti(@RequestParam int idImmobbile){
-        return costoService.totaleCostiPerImmobbile(idImmobbile);
+    public  double totalecosti(@RequestParam int idImmobile){
+        return costoService.totaleCostiPerImmobbile(idImmobile);
+    }
+    @GetMapping("/costiPerData")
+    public List<CostoDto> costiPerData(@RequestParam int mese,@RequestParam int anno,@RequestParam int idImmobile){
+        return costoService.costiPerData(mese,anno,idImmobile);
     }
 }

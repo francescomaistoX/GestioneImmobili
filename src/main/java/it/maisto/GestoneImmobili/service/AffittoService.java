@@ -58,6 +58,9 @@ public class AffittoService {
           if (!(affittoRequest.getScadenza().isBefore(affitto.getInizio())||affittoRequest.getInizio().isAfter(affitto.getScadenza()))){
               return false;
           }
+          if (affittoRequest.getInizio().isBefore(LocalDate.now())||affittoRequest.getScadenza().isBefore(LocalDate.now())) {
+              return false;
+          }
 
       }
      Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);

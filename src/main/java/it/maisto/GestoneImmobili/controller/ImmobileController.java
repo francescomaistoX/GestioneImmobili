@@ -1,6 +1,7 @@
 package it.maisto.GestoneImmobili.controller;
 
 
+import it.maisto.GestoneImmobili.model.Immobile;
 import it.maisto.GestoneImmobili.modelRequest.ImmobileRequest;
 import it.maisto.GestoneImmobili.modelResponse.ImmobileDto;
 import it.maisto.GestoneImmobili.service.ImmobileService;
@@ -33,5 +34,14 @@ public class ImmobileController {
         return ResponseEntity.ok("Immobbile salvato");
     }
 
-
+   @GetMapping("/immobile/{id}")
+    public ImmobileDto immobileForId(@PathVariable int id){
+      Immobile immobile= immobileService.trovaImmobilePerId(id);
+      return immobileService.conversioneDto(immobile);
+   }
+   @DeleteMapping("/immobile/{id}")
+   public ResponseEntity<String> cancellaImmobile(@PathVariable int id){
+        immobileService.cancellaImmobile(id);
+        return ResponseEntity.ok("Immobile cancellato");
+   }
 }

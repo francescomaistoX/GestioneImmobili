@@ -27,6 +27,6 @@ public class AffittoJob implements Job {
         for(Immobile i : immobili){
             int idImmobile = i.getId();
             affittoService.rimuoviAffittiScaduti(idImmobile);
-        }
+       }
     }
 }

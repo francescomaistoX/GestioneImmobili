@@ -61,6 +61,8 @@ public class ImmobileService {
         List<ImmobileDto> immobiliDto = new ArrayList<>();
         for (Immobile i : immobili){
             ImmobileDto dto = new ImmobileDto();
+            dto.setId(i.getId()
+            );
             dto.setIdUtente(i.getUtente().getId());
             dto.setImmaggine(i.getImmaggine());
             dto.setIndirizzo(i.getIndirizzo());
@@ -76,6 +78,7 @@ public class ImmobileService {
         List<ImmobileDto> immobiliDto = new ArrayList<>();
         for (Immobile i : immobili){
             ImmobileDto dto = new ImmobileDto();
+            dto.setId(i.getId());
             dto.setIdUtente(i.getUtente().getId());
             dto.setImmaggine(i.getImmaggine());
             dto.setIndirizzo(i.getIndirizzo());
@@ -85,7 +88,11 @@ public class ImmobileService {
         return immobiliDto;
     }
     public Immobile  trovaImmobilePerId(int id){
-        return immobileRepo.findById(id).orElseThrow(() -> new NotFoundException("Annuncio con id=" + id + " non trovato"));
+        return immobileRepo.findById(id).orElseThrow(() -> new NotFoundException("Immobile con id=" + id + " non trovato"));
+    }
+    public void cancellaImmobile(int id){
+        Immobile immobile=trovaImmobilePerId(id);
+        immobileRepo.delete(immobile);
     }
 
 }

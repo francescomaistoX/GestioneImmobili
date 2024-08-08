@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface AffittoScadutoRepository extends JpaRepository<AffittoScaduto,Integer> {
 
-    List<AffittoScaduto> findByImmobbile(Immobile immobile);
+    List<AffittoScaduto> findByImmobile(Immobile immobile);
 }

@@ -36,13 +36,12 @@ public class AffittoScadutoService {
     }
     public List<AffittoScaduto> listaAffittiScaduti (int idImmobbile){
         Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
-       List<AffittoScaduto> affittiScaduti= affittoScadutoRepository.findByImmobbile(immobile);
+       List<AffittoScaduto> affittiScaduti= affittoScadutoRepository.findByImmobile(immobile);
        return affittiScaduti;
     }
-    public List<AffittoScadutoDto> affittiScadutiDto(int idImmobbile){
-        Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
+    public List<AffittoScadutoDto> affittiScadutiDto(int idImmobile){
         List<AffittoScadutoDto> affittiScadutiDto = new ArrayList<>();
-        List<AffittoScaduto> affittiScaduti = listaAffittiScaduti(idImmobbile);
+        List<AffittoScaduto> affittiScaduti = listaAffittiScaduti(idImmobile);
         for(AffittoScaduto a : affittiScaduti){
             AffittoScadutoDto affittoScadutoDto = convertiDto(a);
             affittiScadutiDto.add(affittoScadutoDto);

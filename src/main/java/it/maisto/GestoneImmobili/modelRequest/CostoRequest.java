@@ -7,8 +7,8 @@ import java.time.LocalDate;
 @Data
 public class CostoRequest {
     private String nome;
-    private String descizione;
+    private String descrizione;
     private double importo;
     private LocalDate data;
-    private Integer idImmobbile;
+    private Integer idImmobile;
 }

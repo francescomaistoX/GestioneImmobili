@@ -10,6 +10,7 @@ import it.maisto.GestoneImmobili.repository.ImmobileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +37,10 @@ public class CostoService {
  public CostoDto salvaCosto(CostoRequest costoRequest,int idImmobile){
      Immobile immobile = immobileService.trovaImmobilePerId(idImmobile);
      Costo costo = new Costo();
-     costo.setDate(costoRequest.getData());
-     costo.setImporto(costo.getImporto());
+     costo.setDate(LocalDate.now());
+     costo.setImporto(costoRequest.getImporto());
      costo.setNome(costoRequest.getNome());
-     costo.setDescrizione(costoRequest.getDescizione());
+     costo.setDescrizione(costoRequest.getDescrizione());
      costo.setImmobile(immobile);
      costoRepository.save(costo);
      immobile.getCosti().add(costo);
@@ -70,6 +71,15 @@ public class CostoService {
         for(Costo c : costi){
           CostoDto dto=  convertiDto(c);
           costiDto.add(dto);
+        }
+        return costiDto;
+    }
+    public List<CostoDto> costiPerData (int mese,int anno,int idImmobile){
+     List<Costo> costi = costoRepository.findByMeseAnno(mese,anno,idImmobile);
+     List<CostoDto> costiDto = new ArrayList<>();
+        for(Costo c : costi){
+            CostoDto dto=  convertiDto(c);
+            costiDto.add(dto);
         }
         return costiDto;
     }
