@@ -13,13 +13,13 @@ public class UtenteService {
     @Autowired
     UtenteRepository utenteRepo;
 
-    public Utente save(UtenteRequest utenteRequest) {
+    public void save(UtenteRequest utenteRequest) {
         Utente utente= new Utente();
         utente.setNome(utenteRequest.getNome());
         utente.setCognome(utenteRequest.getCognome());
         utente.setEmail(utenteRequest.getEmail());
         utente.setPassword(utenteRequest.getPassword());
-        return utenteRepo.save(utente);
+        utenteRepo.save(utente);
     }
     public Utente trovaUtentePerId(int id){
         return utenteRepo.findById(id).orElseThrow(() -> new NotFoundException("Utente con id=" + id + " non trovato"));

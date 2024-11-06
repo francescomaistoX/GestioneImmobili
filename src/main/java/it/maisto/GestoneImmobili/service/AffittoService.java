@@ -27,6 +27,9 @@ public class AffittoService {
     @Autowired
     AffittoScadutoRepository affittoScadutoRepository;
 
+    @Autowired
+    EmailService emailService;
+
    public List<Affitto> listaAffitti(int idImmobbile){
        Immobile immobile = immobileService.trovaImmobilePerId(idImmobbile);
        return affittoRepo.findByImmobile(immobile);
@@ -91,6 +94,21 @@ public class AffittoService {
             affittoScadutoRepository.save(affittoScaduto);
         }
         affittoRepo.deleteAll(affitti);
+    }
+
+    public void avvisoAffittiScaduti(int immobileId) {
+        LocalDate domani = LocalDate.now().plusDays(1);
+        Immobile immobile= immobileService.trovaImmobilePerId(immobileId);
+
+        List<Affitto> affitti = affittoRepo.findByScadenza(domani, immobile);
+        for(Affitto a : affitti){
+            String emailUtente = immobile.getUtente().getEmail();  // Supponiamo che ci sia un metodo per ottenere l'email dell'utente
+            String messaggio = "Gentile " + immobile.getUtente().getNome() +
+                    ", ti informiamo che l'affitto per l'immobile  " + immobile.getNome() +" indirizzo"+immobile.getIndirizzo()+
+                    " scade domani, " + domani + ".";
+            emailService.inviaEmail(emailUtente, "Affitto in scadenza", messaggio);
+        }
+
     }
 
 

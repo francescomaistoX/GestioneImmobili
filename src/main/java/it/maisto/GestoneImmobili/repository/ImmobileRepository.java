@@ -18,4 +18,5 @@ public interface ImmobileRepository extends JpaRepository<Immobile,Integer> {
 
 
 
+
 }

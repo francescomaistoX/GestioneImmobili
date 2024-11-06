@@ -8,6 +8,7 @@ import it.maisto.GestoneImmobili.modelResponse.UtenteDto;
 import it.maisto.GestoneImmobili.service.UtenteService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,11 +22,12 @@ public class UtenteAuthController {
     UtenteService utenteService;
 
 @PostMapping("/utente/register")
-public Utente register(@RequestBody UtenteRequest utenteRequest, BindingResult bindingResult) throws BadRequestException {
+public ResponseEntity<String> register(@RequestBody UtenteRequest utenteRequest, BindingResult bindingResult) throws BadRequestException {
     if(bindingResult.hasErrors()){
         throw new BadRequestException(bindingResult.getAllErrors().toString());
     }
-    return utenteService.save(utenteRequest);
+     utenteService.save(utenteRequest);
+        return ResponseEntity.ok("Registrazione avvenuta");
 }
     @PostMapping("/utente/login")
     public UtenteDto login(@RequestBody LoginRequest loginRequest, BindingResult bindingResult) throws BadRequestException {
